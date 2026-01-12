@@ -14,8 +14,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir estáticos desde la carpeta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+// ESTO ES CLAVE: Definir la ruta de la carpeta pública de forma absoluta
+const publicPath = path.join(process.cwd(), 'public');
+app.use(express.static(publicPath));
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
@@ -23,10 +24,10 @@ const openai = new OpenAI({
 
 // Ruta de la API
 app.post("/api/narrate", async (req, res) => {
-    const { speaker, text } = req.body;
-    if (!text) return res.status(400).json({ textError: "No hay texto." });
-
     try {
+        const { speaker, text } = req.body;
+        if (!text) return res.status(400).json({ textError: "No hay texto." });
+
         const mp3 = await openai.audio.speech.create({
             model: "tts-1",
             voice: speaker || "nova",
@@ -36,16 +37,24 @@ app.post("/api/narrate", async (req, res) => {
         const buffer = Buffer.from(await mp3.arrayBuffer());
         
         res.setHeader("Content-Type", "audio/mpeg");
-        res.send(buffer);
+        // Usamos send(buffer) para evitar problemas de escritura en disco
+        return res.send(buffer);
+        
     } catch (error) {
         console.error("OpenAI Error:", error);
-        res.status(500).json({ error: "Error en la generación de audio." });
+        return res.status(500).json({ error: "Error en OpenAI: " + error.message });
     }
 });
 
-// Captura cualquier otra ruta y sirve el index.html
+// Captura cualquier otra ruta para servir el index.html (SPA mode)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(publicPath, 'index.html'));
 });
+
+// Esto es para que funcione localmente pero no interfiera con Vercel
+if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => console.log(`http://localhost:${port}`));
+}
 
 export default app;
