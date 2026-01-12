@@ -60,13 +60,8 @@ Autonomía: Construido en horas limitadas sin seguir tutoriales.
 
 ## Demo en vivo
 Prueba el narrador en tiempo real:
-https://narrador-openai.vercel.app
+https://narrador-de-ia-de-textos-a-audios.vercel.app/
 (Espera 10-20 segundos al primer uso — plan gratuito)
-
-Pregunta:
-"Cuenta una historia sobre un dragón valiente." (Selecciona voz: Fable)
-"Lee este poema en voz femenina." (Selecciona voz: Nova)
-"¿Puedes narrar las noticias de hoy?" (Selecciona voz: Onyx)
 
 ## Notas para empleadores
 Este es uno de mis proyectos full-stack más recientes.
@@ -83,4 +78,5 @@ GitHub: github.com/JesusBustos12
 LinkedIn: linkedin.com/in/jesus-bustos-arizmendi-325329283
 Correo: jesusbustosarizmendi0@gmail.com
 Número de celular: 762-119-2732
+
 ¡Gracias por revisar mi trabajo!
