@@ -1,0 +1,21 @@
+{
+  "name": "pro_5---narrador-con-openai",
+  "version": "1.0.0",
+  "description": "Chat de IA que realiza narraciones de texto a audio.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "starts": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jesus Bustos Arizmendi",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "fs": "^0.0.1-security",
+    "openai": "^6.16.0",
+    "path": "^0.12.7"
+  }
+}

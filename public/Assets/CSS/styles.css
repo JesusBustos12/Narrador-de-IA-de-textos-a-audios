@@ -1,0 +1,308 @@
+:root {
+    --bg-main: #020617;
+    --bg-container: #1E293B;
+    --primary-color: #3F37C9;
+    --accent-color: #4895EF;
+    --text-main: #FFFFFF;
+    --text-muted: #94A3B8;
+    --text-button: #FFFFFF;
+    --user-msg-bg: #334155;
+    --bot-msg-bg: #3F37C9;
+    --border-color: #4895EF;
+    --shadow-color: rgba(63, 55, 201, 0.3);
+
+    font-size: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    /* Efecto de profundidad con gradiente radial */
+    background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+}
+
+.layout {
+    width: 100%;
+    max-width: 80rem;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2.5rem;
+}
+
+/* --- CABECERA --- */
+.layout__header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+#img {
+    width: 45px;
+    height: 45px;
+    filter: drop-shadow(0 0 10px var(--accent-color));
+}
+
+#title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.05rem;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1.5rem;
+}
+
+/* --- CONTENEDOR DE MENSAJES --- */
+.layout__messages {
+    width: 100%;
+    height: 54rem;
+    background-color: var(--bg-container);
+    border: 1px solid rgba(72, 149, 239, 0.3);
+    border-radius: 1.2rem;
+    box-shadow: 0 20px 40px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.messages__content {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Scrollbar azulada */
+.messages__content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.messages__content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+/* Burbujas Modernas */
+.messages__content--user,
+.messages__content--bot {
+    max-width: 80%;
+    padding: 1.3rem 1.8rem;
+    font-size: 1.5rem;
+    border-radius: 1.5rem;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
+}
+
+.messages__content--user {
+    align-self: flex-end;
+    background-color: var(--user-msg-bg);
+    color: var(--text-main);
+    border-bottom-right-radius: 0.2rem;
+}
+
+.messages__content--bot {
+    align-self: flex-start;
+    background-color: var(--bot-msg-bg);
+    color: var(--text-button);
+    border-bottom-left-radius: 0.2rem;
+    box-shadow: 0 4px 15px rgba(63, 55, 201, 0.4);
+    box-shadow: 0 0 15px rgba(63, 55, 201, 0.4);
+    border: 1px solid rgba(72, 149, 239, 0.3);
+}
+
+/* --- ÁREA DE INPUTS --- */
+.messages__inputs {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#inputText {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.6rem;
+    background-color: #0f172a;
+    color: var(--text-main);
+    border: 1px solid var(--user-msg-bg);
+    border-radius: 0.8rem;
+    outline: none;
+    transition: all 0.2s;
+}
+
+#inputText:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(72, 149, 239, 0.2);
+}
+
+.inputs__category {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+#label {
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.category__options {
+    flex: 1;
+    padding: 1rem;
+    background: #0f172a;
+    color: white;
+    border: 1px solid var(--user-msg-bg);
+    border-radius: 0.8rem;
+}
+
+#sendButton {
+    padding: 1.1rem 2.5rem;
+    background-color: var(--primary-color);
+    color: var(--text-button);
+    border: none;
+    border-radius: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+#sendButton:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* --- ANIMACIONES --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top: 2px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- RESPONSIVE DESIGN (ADAPTACIÓN A DISPOSITIVOS) --- */
+
+/* 1. Ajuste para Tablets (Menos de 1024px) */
+@media (max-width: 1024px) {
+    .layout {
+        max-width: 90%;
+        /* Ocupa más ancho en tablets */
+    }
+
+    .layout__messages {
+        height: 65vh;
+        /* Ajuste de altura basado en el alto de pantalla */
+    }
+}
+
+/* 2. Ajuste para Celulares Grandes (Menos de 768px) */
+@media (max-width: 768px) {
+    :root {
+        font-size: 9px;
+        /* Reducimos la base para que todo escale un poco */
+    }
+
+    .layout {
+        max-width: 100%;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    #title {
+        font-size: 2.4rem;
+        /* Título un poco más pequeño */
+    }
+
+    .layout__messages {
+        height: 70vh;
+        /* Más espacio para el chat en móvil */
+        padding: 1.5rem;
+    }
+
+    .messages__content--user,
+    .messages__content--bot {
+        max-width: 90%;
+        /* Burbujas más anchas en pantallas pequeñas */
+        font-size: 1.4rem;
+    }
+}
+
+/* 3. Ajuste para Celulares Pequeños (Menos de 480px) */
+@media (max-width: 480px) {
+    .layout__header {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    #img {
+        width: 35px;
+        height: 35px;
+    }
+
+    #title {
+        font-size: 2rem;
+    }
+
+    /* Ajuste de inputs para que no se vean apretados */
+    .inputs__category {
+        flex-direction: column;
+        /* Apilamos el label y el select */
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .category__options {
+        width: 100%;
+        /* El select ocupa todo el ancho */
+    }
+
+    #sendButton {
+        width: 100%;
+        /* Botón de enviar grande para el pulgar */
+        padding: 1.5rem;
+    }
+}
+
+/* 4. Ajuste para pantallas muy altas o monitores ultra-wide */
+@media (min-height: 900px) {
+    .layout__messages {
+        height: 60rem;
+    }
+}

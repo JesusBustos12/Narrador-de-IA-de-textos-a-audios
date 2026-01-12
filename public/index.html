@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="img/png" href="./Assets/Imgs/Audio.png"/>
+    <link rel="stylesheet" href="./Assets/CSS/styles.css"/>
+    <script src="./Assets/JS/main.js" defer></script>
+    <title>Narrador con IA</title>
+</head>
+
+<body>
+
+    <main class="layout">
+
+        <header class="layout__header">
+            <img id="img" src="./Assets/Imgs/Audio.png">
+            <h2 id="title">Narrador con IA</h2>
+        </header>
+
+        <section class="layout__messages">
+
+            <div class="messages__content">
+
+            </div>
+
+            <section class="messages__inputs">
+
+                <input type="text" id="inputText" placeholder="Escribe el texto que quieras narrar."/>
+
+                <section class="inputs__category">
+
+                    <label id="label" for="category">Opción de voz:</label>
+                    
+                    <select class="category__options" id="category">
+                        <option value="nova">Nova</option>
+                        <option value="shimmer">Shimmer</option>
+                        <option value="echo">Echo</option>
+                        <option value="onyx">Onyx</option>
+                        <option value="fable">Fable</option>
+                        <option value="alloy">Alloy</option>
+                        <option value="ash">Ash</option>
+                        <option value="coral">Coral</option>
+                    </select>
+
+                    <input type="button" id="sendButton" value="Narrar" />
+
+                </section>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
