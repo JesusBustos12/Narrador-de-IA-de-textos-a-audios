@@ -11,11 +11,11 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Configuración de archivos estáticos mejorada para Vercel
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Servir estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
@@ -24,26 +24,26 @@ const openai = new OpenAI({
 // Ruta de la API
 app.post("/api/narrate", async (req, res) => {
     const { speaker, text } = req.body;
-    if (!text) return res.status(400).json({ textError: "No has escrito nada." });
+    if (!text) return res.status(400).json({ textError: "No hay texto." });
 
     try {
-        const response = await openai.audio.speech.create({
+        const mp3 = await openai.audio.speech.create({
             model: "tts-1",
+            voice: speaker || "nova",
             input: text,
-            voice: speaker,
-            response_format: "mp3"
         });
 
-        const buffer = Buffer.from(await response.arrayBuffer());
-        res.setHeader("Content-Type", "audio/mp3");
+        const buffer = Buffer.from(await mp3.arrayBuffer());
+        
+        res.setHeader("Content-Type", "audio/mpeg");
         res.send(buffer);
     } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Error al generar el audio." });
+        console.error("OpenAI Error:", error);
+        res.status(500).json({ error: "Error en la generación de audio." });
     }
 });
 
-// IMPORTANTE: Esto permite que si recargas la página en una ruta interna, no de un 404
+// Captura cualquier otra ruta y sirve el index.html
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
