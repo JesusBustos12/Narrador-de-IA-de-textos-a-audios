@@ -32,6 +32,7 @@ app.post("/api/narrate", async (req, res) => {
             model: "tts-1",
             input: text,
             voice: speaker,
+            max_tokens: 600,
             response_format: "mp3"
         });
 
@@ -46,3 +47,4 @@ app.post("/api/narrate", async (req, res) => {
 });
 
 export default app;
+
