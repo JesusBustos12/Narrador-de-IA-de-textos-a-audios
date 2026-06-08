@@ -4,7 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="img/png" href="./Assets/Imgs/Audio.png"/>
+    
+    <!-- SEO Básico -->
+    <meta name="description" content="Narrador inteligente con IA — Convierte texto a audio con voces realistas de OpenAI. Selecciona entre 8 voces y genera narraciones al instante.">
+    <meta name="author" content="Jesus Bustos Arizmendi">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#020617">
+
+    <!-- Open Graph (Redes Sociales) -->
+    <meta property="og:title" content="Narrador con IA — Texto a Audio con OpenAI">
+    <meta property="og:description" content="Convierte cualquier texto en audio narrado con voces realistas de inteligencia artificial.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./Assets/Imgs/Audio.png">
+    <meta property="og:url" content="https://narrador-openai.vercel.app">
+    <meta property="og:locale" content="es_MX">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Narrador con IA — Texto a Audio">
+    <meta name="twitter:description" content="Genera narraciones de audio con 8 voces de IA.">
+
+    <link rel="icon" type="image/png" href="./Assets/Imgs/Audio.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="preload" href="./Assets/CSS/styles.css" as="style">
+    <link rel="preload" href="./Assets/JS/main.js" as="script">
     <link rel="stylesheet" href="./Assets/CSS/styles.css"/>
     <script src="./Assets/JS/main.js" defer></script>
     <title>Narrador con IA</title>
@@ -15,19 +41,20 @@
     <main class="layout">
 
         <header class="layout__header">
-            <img id="img" src="./Assets/Imgs/Audio.png">
-            <h2 id="title">Narrador con IA</h2>
+            <img id="img" src="./Assets/Imgs/Audio.png" alt="Ícono de audio del Narrador con IA" width="45" height="45">
+            <h1 id="title">Narrador con IA</h1>
         </header>
 
-        <section class="layout__messages">
+        <section class="layout__messages" role="region" aria-label="Área de conversación">
 
-            <div class="messages__content">
+            <div class="messages__content" role="log" aria-live="polite" aria-label="Historial de mensajes">
 
             </div>
 
-            <section class="messages__inputs">
+            <section class="messages__inputs" role="form" aria-label="Formulario de narración">
 
-                <input type="text" id="inputText" placeholder="Escribe el texto que quieras narrar."/>
+                <textarea id="inputText" placeholder="Escribe el texto que quieras narrar..." rows="3" maxlength="4096" aria-label="Texto para narrar" aria-describedby="charCount"></textarea>
+                <small id="charCount" class="char-count">0 / 4096</small>
 
                 <section class="inputs__category">
 
@@ -44,7 +71,7 @@
                         <option value="coral">Coral</option>
                     </select>
 
-                    <input type="button" id="sendButton" value="Narrar" />
+                    <button type="button" id="sendButton" aria-label="Generar narración de audio">Narrar</button>
 
                 </section>
 

@@ -13,38 +13,38 @@ Aplicar buenas prácticas de seguridad (.env, .gitignore, variables de entorno).
 Construir un portafolio profesional listo para despliegue en producción.
 
 ## Características
-Narración en tiempo real: Convierte texto a audio MP3 usando voces predefinidas de OpenAI (Nova, Shimmer, Echo, etc.).
-Interfaz de chat: Muestra mensajes del usuario y respuestas del bot con un reproductor de audio integrado.
-Loader animado: Indicador visual durante la generación del audio.
+Narración en tiempo real: Convierte texto a audio MP3/MPEG usando voces predefinidas de OpenAI (Nova, Shimmer, Echo, etc.).
+Interacción segura y validada: Limits de tasa (Rate Limiting), sanitización de inputs y prevención de desbordamientos.
+Interfaz de chat y Accesibilidad: Atributos ARIA implementados, navegación por teclado y contador de caracteres.
+Loader animado: Indicador visual y desactivación de botones durante la generación del audio.
 Mensajes diferenciados: Usuario (gris oscuro) y bot (azul neón) con formato de burbuja y scroll automático.
 Selección de voz: Dropdown con 8 opciones de voces para personalizar la narración.
-Diseño moderno: Tema oscuro, sombras neón, transiciones suaves y responsivo para móviles/tablets.
-Entrada por teclado: Enviar texto con Enter o botón.
-Seguridad: API key protegida con dotenv y nunca expuesta en GitHub.
-Despliegue listo: Configurado para Vercel, Render o Hostinger con vercel.json.
+Diseño moderno: Tema oscuro, sombras neón, transiciones suaves, fuente nativa Inter y responsive para móviles/tablets.
+Entrada por teclado: Enviar texto con Enter o botón, soporte de nuevas líneas con Shift+Enter en el nuevo textarea.
+Seguridad y Optimización: Cabeceras de seguridad con Helmet, CORS, caché estático de recursos y compresión (Brotli/Gzip).
 
 ## Tecnologías utilizadas
 Node.js + Express: Servidor backend, rutas API y manejo de solicitudes.
 OpenAI TTS API: Generación de audio a partir de texto con voces personalizables.
-JavaScript (vanilla): Manipulación del DOM, eventos, fetch asíncrono y creación de blobs de audio.
-HTML5 + CSS3: Estructura semántica, Flexbox, animaciones con @keyframes y media queries responsivas.
-dotenv: Gestión segura de variables de entorno.
+JavaScript (vanilla): Manipulación del DOM, eventos, fetch asíncrono y creación de blobs de audio con liberación de memoria.
+HTML5 + CSS3: Estructura semántica, Flexbox, animaciones con @keyframes, meta tags SEO y media queries responsivas.
+Seguridad & Performance: dotenv, helmet, cors, express-rate-limit y compression.
 Git & GitHub: Control de versiones y colaboración.
-Vercel (opcional): Despliegue en producción con configuración personalizada.
+Nodemon: Para entorno de desarrollo ágil.
 
 ## Estructura del proyecto
 narrador-openai/
-├── app.js                # Servidor Express + lógica OpenAI TTS
-├── package.json          # Dependencias y scripts
+├── app.js                # Servidor Express, seguridad, rate-limits y lógica OpenAI TTS
+├── package.json          # Dependencias y scripts (start, dev)
 ├── package-lock.json     # Bloqueo de versiones de dependencias
 ├── vercel.json           # Configuración para despliegue en Vercel
 ├── public/
-│   ├── index.html        # Estructura del narrador
+│   ├── index.html        # Estructura semántica, preloads y metadatos SEO
 │   ├── Assets/
-│   │   ├── CSS/styles.css # Diseño neón, loader, burbujas responsivas
-│   │   ├── JS/main.js     # Lógica del frontend (DOM, fetch, audio)
+│   │   ├── CSS/styles.css # Diseño neón, loader, accesibilidad y estados de interacción
+│   │   ├── JS/main.js     # Lógica segura del frontend, gestión de blobs y feedback
 │   │   └── Imgs/Audio.png # Ícono y assets visuales
-├── .env.example          # Plantilla de variables (sin claves)
+├── .env.example          # Plantilla segura de variables
 ├── .gitignore            # Protege .env, node_modules
 └── README.md             # Esta documentación
 Habilidades demostradas

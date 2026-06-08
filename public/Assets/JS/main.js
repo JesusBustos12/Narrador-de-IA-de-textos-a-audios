@@ -2,6 +2,17 @@ const messagesContent = document.querySelector(".messages__content");
 const categoryOptions = document.querySelector(".category__options"); 
 const inputText = document.getElementById("inputText");
 const sendButton = document.getElementById("sendButton");
+const charCount = document.getElementById("charCount");
+
+const MAX_CHARS = 4096;
+
+inputText.addEventListener("input", () => {
+    const len = inputText.value.length;
+    if(charCount) {
+        charCount.textContent = `${len} / ${MAX_CHARS}`;
+        charCount.style.color = len > MAX_CHARS ? "#f87171" : "var(--text-muted)";
+    }
+});
 
 async function sendNarrate(){
 
@@ -9,6 +20,11 @@ async function sendNarrate(){
     const speaker = categoryOptions.value;
 
     if(!text) return false;
+
+    // Desactivar inputs durante la generación
+    sendButton.disabled = true;
+    inputText.disabled = true;
+    sendButton.textContent = "Generando...";
 
     const messageUser = document.createElement("div");
     messageUser.className = "messages__content--user";
@@ -43,27 +59,40 @@ async function sendNarrate(){
             messageBot.className = "messages__content--bot";
             messageBot.innerHTML = `
                 <audio controls>
-                    <source src="${audioURL}" type="audio/mp3">
-                        Tu navegador no es compatible con archivos: 
-                    </source>
+                    <source src="${audioURL}" type="audio/mpeg">
+                    Tu navegador no es compatible con la reproducción de audio.
                 </audio>
             `;
+
+            const audioEl = messageBot.querySelector("audio");
+            audioEl.addEventListener("ended", () => URL.revokeObjectURL(audioURL));
 
             messagesContent.appendChild(messageBot);
             messagesContent.scrollTop = messagesContent.scrollHeight;
 
+        } else {
+            const errorData = await response.json().catch(() => null);
+            const errorMsg = errorData?.error || "Error al generar el audio. Intenta de nuevo.";
+            messageBot.innerHTML = `<span style="color: #f87171;">⚠️ ${errorMsg}</span>`;
         }
 
     }catch(exception){
-        console.log(exception, "Error con el proceso de la respuesta del servidor."); 
+        console.error("Error de red:", exception);
+        messageBot.innerHTML = `<span style="color: #f87171;">⚠️ Error de conexión. Verifica tu internet.</span>`;
+    } finally {
+        // Reactivar
+        sendButton.disabled = false;
+        inputText.disabled = false;
+        sendButton.textContent = "Narrar";
+        inputText.value = "";
+        if(charCount) charCount.textContent = `0 / ${MAX_CHARS}`;
+        inputText.focus();
     }
-
-    inputText.value = "";
 }
 
 sendButton.addEventListener("click", sendNarrate);
 inputText.addEventListener("keydown", (event) => {
-    if(event.key === "Enter"){
+    if(event.key === "Enter" && !event.shiftKey){
         event.preventDefault();
         sendNarrate();
     }
