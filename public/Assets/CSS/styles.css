@@ -132,8 +132,15 @@ body {
     gap: 1.5rem;
 }
 
-#inputText {
+.inputs__text-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
     width: 100%;
+}
+
+#inputText {
+    flex: 1;
     padding: 1.2rem;
     font-size: 1.6rem;
     font-family: inherit;
@@ -142,9 +149,8 @@ body {
     border: 1px solid var(--user-msg-bg);
     border-radius: 0.8rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    resize: vertical;
-    min-height: 5rem;
-    max-height: 15rem;
+    resize: none;
+    min-height: 7rem;
 }
 
 #inputText:focus {
@@ -162,9 +168,7 @@ body {
 .char-count {
     font-size: 1.2rem;
     color: var(--text-muted);
-    text-align: right;
-    display: block;
-    margin-top: 0.3rem;
+    white-space: nowrap;
 }
 
 .inputs__category {
