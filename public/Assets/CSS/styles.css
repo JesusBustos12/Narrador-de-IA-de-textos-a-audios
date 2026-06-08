@@ -155,8 +155,8 @@ body {
 #inputText:focus-visible,
 #sendButton:focus-visible,
 .category__options:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
+    outline: 1px solid var(--accent-color);
+    outline-offset: 1px;
 }
 
 .char-count {
