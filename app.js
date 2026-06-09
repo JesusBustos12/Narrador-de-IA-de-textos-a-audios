@@ -13,14 +13,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(helmet({
-    contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-            "media-src": ["'self'", "blob:"],
-            "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-            "font-src": ["'self'", "https://fonts.gstatic.com", "data:"]
-        }
-    }
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false
 }));
 app.use(compression());
 
