@@ -1,7 +1,7 @@
 # Narrador con OpenAI TTS - Portafolio Full-Stack
 
 ## Descripción
-Aplicación web full-stack que implementa un narrador inteligente de texto a audio utilizando la API de TTS (Text-to-Speech) de OpenAI. El sistema permite a los usuarios ingresar texto, seleccionar una voz y generar narraciones en audio en tiempo real, con una interfaz de chat moderna que muestra mensajes de usuario y reproduce el audio generado. Construido con Node.js, Express, JavaScript vanilla y CSS puro, sin frameworks. Ideal para demostrar habilidades full-stack en un primer empleo.
+Aplicación web full-stack que implementa un narrador inteligente de texto a audio utilizando la API de TTS (Text-to-Speech) de OpenAI. El sistema permite a los usuarios ingresar texto, seleccionar una voz y generar narraciones en audio en tiempo real, con una interfaz de chat moderna que muestra mensajes de usuario y reproduce el audio generado. Construido con Node.js, Express, JavaScript vanilla y CSS puro, sin frameworks. 
 
 ## Objetivo
 Como estudiante universitario autodidacta, desarrollé este proyecto para:
