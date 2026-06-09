@@ -12,7 +12,16 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+            "media-src": ["'self'", "blob:"],
+            "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            "font-src": ["'self'", "https://fonts.gstatic.com", "data:"]
+        }
+    }
+}));
 app.use(compression());
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
