@@ -77,6 +77,5 @@ Estoy listo para contribuir en equipos reales como Junior Full-Stack Developer.
 GitHub: github.com/JesusBustos12
 LinkedIn: linkedin.com/in/jesus-bustos-arizmendi-325329283
 Correo: jesusbustosarizmendi0@gmail.com
-Número de celular: 762-119-2732
 
 ¡Gracias por revisar mi trabajo!

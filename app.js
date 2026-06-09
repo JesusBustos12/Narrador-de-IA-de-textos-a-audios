@@ -66,7 +66,6 @@ app.post("/api/narrate", apiLimiter, async (req, res) => {
             model: "tts-1",
             input: text,
             voice: speaker,
-            max_tokens: 600,
             response_format: "mp3"
         });
 
