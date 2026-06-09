@@ -56,9 +56,24 @@ async function sendNarrate(){
             const audioBlob = await response.blob();
             const arrayBuffer = await audioBlob.arrayBuffer();
 
-            // Web Audio API — evita CSP blob: restrictions
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+            // Web Audio API — compatibilidad cruzada
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) {
+                throw new Error("Tu navegador no soporta Web Audio API.");
+            }
+            const audioContext = new AudioContextClass();
+
+            // Soportar Promise o Callback para decodeAudioData
+            const audioBuffer = await new Promise((resolve, reject) => {
+                const decodeResult = audioContext.decodeAudioData(
+                    arrayBuffer,
+                    (buffer) => resolve(buffer),
+                    (err) => reject(new Error("Error al decodificar el audio: " + err))
+                );
+                // Si el navegador soporta Promises natively
+                if (decodeResult) decodeResult.catch(reject);
+            });
+
             const gainNode = audioContext.createGain();
             gainNode.connect(audioContext.destination);
 
@@ -261,13 +276,13 @@ async function sendNarrate(){
 
         } else {
             const errorData = await response.json().catch(() => null);
-            const errorMsg = errorData?.error || "Error al generar el audio. Intenta de nuevo.";
+            const errorMsg = errorData?.error || `Error del servidor HTTP ${response.status}`;
             messageBot.innerHTML = `<span style="color: #f87171;">⚠️ ${errorMsg}</span>`;
         }
 
     }catch(exception){
-        console.error("Error de red:", exception);
-        messageBot.innerHTML = `<span style="color: #f87171;">⚠️ Error de conexión. Verifica tu internet.</span>`;
+        console.error("Error de red o procesamiento:", exception);
+        messageBot.innerHTML = `<span style="color: #f87171;">⚠️ Error interno: ${exception.message || "Falla de red"}</span>`;
     } finally {
         // Reactivar
         sendButton.disabled = false;
