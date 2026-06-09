@@ -68,20 +68,25 @@ async function sendNarrate(){
 
             messageBot.className = "messages__content--bot";
             messageBot.innerHTML = `
-                <div style="display:flex;align-items:center;gap:1rem;width:100%;">
+                <div style="display:flex;align-items:center;gap:1.2rem;width:100%;min-width:250px;padding:0.5rem 0;">
                     <button class="audio-play-btn" aria-label="Reproducir audio" style="
                         background:var(--accent-color);color:white;border:none;border-radius:50%;
-                        width:36px;height:36px;cursor:pointer;font-size:1.4rem;display:flex;
+                        width:42px;height:42px;min-width:42px;cursor:pointer;font-size:1.6rem;display:flex;
                         align-items:center;justify-content:center;flex-shrink:0;
+                        transition:background 0.2s,transform 0.15s;
                     ">▶</button>
-                    <div style="flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden;">
-                        <div class="audio-progress" style="width:0%;height:100%;background:var(--accent-color);border-radius:3px;transition:width 0.2s;"></div>
+                    <div style="flex:1;min-width:80px;">
+                        <div style="height:8px;background:rgba(255,255,255,0.2);border-radius:4px;overflow:hidden;">
+                            <div class="audio-progress" style="width:0%;height:100%;background:var(--accent-color);border-radius:4px;transition:width 0.15s linear;"></div>
+                        </div>
                     </div>
-                    <span class="audio-time" style="font-size:1.1rem;color:var(--text-muted);white-space:nowrap;">
+                    <span class="audio-time" style="font-size:1.3rem;color:var(--text-muted);white-space:nowrap;font-variant-numeric:tabular-nums;">
                         0:00 / ${Math.floor(duration/60)}:${String(Math.floor(duration%60)).padStart(2,'0')}
                     </span>
                 </div>
             `;
+
+            messagesContent.scrollTop = messagesContent.scrollHeight;
 
             const playBtn = messageBot.querySelector(".audio-play-btn");
             const progressBar = messageBot.querySelector(".audio-progress");
@@ -115,14 +120,12 @@ async function sendNarrate(){
 
             playBtn.addEventListener("click", () => {
                 if (isPlaying) {
-                    // Pause
                     isPlaying = false;
                     playBtn.textContent = "▶";
                     pauseOffset += audioContext.currentTime - startTime;
                     if (progressInterval) clearInterval(progressInterval);
                     if (source) { try { source.stop(); } catch(e){} source = null; }
                 } else {
-                    // Play
                     if (pauseOffset >= duration) pauseOffset = 0;
                     source = audioContext.createBufferSource();
                     source.buffer = audioBuffer;
