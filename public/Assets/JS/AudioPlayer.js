@@ -118,7 +118,7 @@ export default class AudioPlayer {
         this.pauseOffset = 0;
         this.elements.playBtn.textContent = "▶";
         this.elements.bar.style.width = "0%";
-        this.elements.timeEl.textContent = \`0:00 / \${this.formatTime(this.duration)}\`;
+        this.elements.timeEl.textContent = `0:00 / ${this.formatTime(this.duration)}`;
     }
 
     startFrom(offset) {
