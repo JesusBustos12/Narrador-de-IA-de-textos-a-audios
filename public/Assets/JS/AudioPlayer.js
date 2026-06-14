@@ -86,7 +86,7 @@ export default class AudioPlayer {
     formatTime(sec) {
         const m = Math.floor(sec / 60);
         const s = String(Math.floor(sec % 60)).padStart(2, '0');
-        return `${m}:${s}`;
+        return m + ":" + s;
     }
 
     getElapsed() {
@@ -97,7 +97,7 @@ export default class AudioPlayer {
     updateUI() {
         const el = this.getElapsed();
         this.elements.bar.style.width = (el / this.duration * 100) + "%";
-        this.elements.timeEl.textContent = `${this.formatTime(el)} / ${this.formatTime(this.duration)}`;
+        this.elements.timeEl.textContent = this.formatTime(el) + " / " + this.formatTime(this.duration);
         if (el >= this.duration) this.stopAll();
     }
 
@@ -118,7 +118,7 @@ export default class AudioPlayer {
         this.pauseOffset = 0;
         this.elements.playBtn.textContent = "▶";
         this.elements.bar.style.width = "0%";
-        this.elements.timeEl.textContent = `0:00 / ${this.formatTime(this.duration)}`;
+        this.elements.timeEl.textContent = "0:00 / " + this.formatTime(this.duration);
     }
 
     startFrom(offset) {
