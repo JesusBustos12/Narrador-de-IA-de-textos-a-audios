@@ -1,4 +1,4 @@
-import AudioPlayer from './AudioPlayer.js';
+import AudioPlayer from './AudioPlayer.js?v=2';
 
 const messagesContent = document.querySelector(".messages__content");
 const categoryOptions = document.querySelector(".category__options"); 
