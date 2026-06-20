@@ -5,8 +5,40 @@ const categoryOptions = document.querySelector(".category__options");
 const inputText = document.getElementById("inputText");
 const sendButton = document.getElementById("sendButton");
 const charCount = document.getElementById("charCount");
+const limitCounter = document.getElementById("limit-counter");
+const progressFill = document.getElementById("progress-fill");
 
 const MAX_CHARS = 4096;
+const MAX_NARRATIONS = 5;
+
+const updateLimitUI = async () => {
+    try {
+        const response = await fetch('/api/limit-status');
+        if (response.ok) {
+            const data = await response.json();
+            const remaining = data.remaining;
+            
+            limitCounter.textContent = remaining;
+            
+            const percentage = (remaining / MAX_NARRATIONS) * 100;
+            progressFill.style.width = `${percentage}%`;
+
+            if (remaining === 0) {
+                sendButton.disabled = true;
+                sendButton.textContent = "Límite Alcanzado";
+                progressFill.style.background = "#52525b";
+                return true;
+            }
+            return false;
+        }
+    } catch (error) {
+        console.error("Error al obtener el límite:", error);
+    }
+    return false;
+};
+
+// Inicializar límite al cargar la página
+updateLimitUI();
 
 inputText.addEventListener("input", () => {
     const len = inputText.value.length;
@@ -22,6 +54,13 @@ async function sendNarrate(){
     const speaker = categoryOptions.value;
 
     if(!text) return false;
+
+    // Chequear visualmente el límite antes de enviar
+    const isLimitReached = await updateLimitUI();
+    if(isLimitReached) {
+        alert("Has alcanzado el límite de narraciones para este dispositivo.");
+        return;
+    }
 
     // Desactivar inputs durante la generación
     sendButton.disabled = true;
@@ -81,6 +120,9 @@ async function sendNarrate(){
 
             // Instanciar la clase AudioPlayer
             new AudioPlayer(messageBot, audioBuffer, audioBlob, audioContext);
+
+            // Actualizar límite después de uso exitoso
+            await updateLimitUI();
 
         } else {
             const errorData = await response.json().catch(() => null);

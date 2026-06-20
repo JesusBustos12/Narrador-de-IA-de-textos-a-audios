@@ -6,8 +6,17 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import path from "path";
+import mysql from "mysql2/promise";
 
 dotenv.config();
+
+const pool = mysql.createPool({
+    uri: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: true
+    }
+});
+const MAX_NARRATIONS = 5;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -37,6 +46,26 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
 
+// Endpoint para consultar el estado del límite
+app.get("/api/limit-status", async (req, res) => {
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    try {
+        const [rows] = await pool.query(`
+            SELECT IF(TIMESTAMPDIFF(HOUR, updated_at, CURRENT_TIMESTAMP) >= 24, 0, generation_count) as active_count 
+            FROM user_generations 
+            WHERE ip_address = ?
+        `, [ip]);
+        let count = 0;
+        if (rows.length > 0) {
+            count = rows[0].active_count;
+        }
+        res.json({ remaining: Math.max(0, MAX_NARRATIONS - count), max: MAX_NARRATIONS });
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).json({ error: "Error interno del servidor al consultar límites" });
+    }
+});
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
@@ -61,6 +90,28 @@ app.post("/api/narrate", apiLimiter, async (req, res) => {
     if (text.length > MAX_TEXT_LENGTH) return res.status(400).json({ error: `El texto no puede superar los ${MAX_TEXT_LENGTH} caracteres.` });
     if (!VALID_VOICES.includes(speaker)) return res.status(400).json({ error: "Voz no válida." });
 
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    try {
+        // Verificar limite en la base de datos (con reseteo de 24h)
+        const [rows] = await pool.query(`
+            SELECT IF(TIMESTAMPDIFF(HOUR, updated_at, CURRENT_TIMESTAMP) >= 24, 0, generation_count) as active_count 
+            FROM user_generations 
+            WHERE ip_address = ?
+        `, [ip]);
+        let currentCount = 0;
+        if (rows.length > 0) {
+            currentCount = rows[0].active_count;
+        }
+
+        if (currentCount >= MAX_NARRATIONS) {
+            return res.status(403).json({ error: "Has alcanzado el límite máximo de 5 narraciones por dispositivo." });
+        }
+    } catch (dbError) {
+        console.error("Error al consultar TiDB:", dbError);
+        return res.status(500).json({ error: "Error interno del servidor al verificar límites." });
+    }
+
     try {
         const response = await openai.audio.speech.create({
             model: "tts-1",
@@ -71,6 +122,19 @@ app.post("/api/narrate", apiLimiter, async (req, res) => {
 
         // Convertimos la respuesta directamente a un Buffer
         const buffer = Buffer.from(await response.arrayBuffer());
+
+        try {
+            // Incrementar contador en TiDB (reseteando a 1 si han pasado 24h)
+            await pool.query(`
+                INSERT INTO user_generations (ip_address, generation_count, updated_at) 
+                VALUES (?, 1, CURRENT_TIMESTAMP) 
+                ON DUPLICATE KEY UPDATE 
+                    generation_count = IF(TIMESTAMPDIFF(HOUR, updated_at, CURRENT_TIMESTAMP) >= 24, 1, generation_count + 1),
+                    updated_at = CURRENT_TIMESTAMP
+            `, [ip]);
+        } catch (dbError) {
+            console.error("Error al actualizar limite en TiDB:", dbError);
+        }
 
         // Enviamos el buffer directamente al cliente
         res.setHeader("Content-Type", "audio/mpeg");

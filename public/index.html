@@ -40,8 +40,17 @@
     <main class="layout">
 
         <header class="layout__header">
-            <img id="img" src="./Assets/Imgs/Audio.png" alt="Ícono de audio del Narrador con IA" width="45" height="45">
-            <h1 id="title">Narrador con IA</h1>
+            <div class="header__logo">
+                <img id="img" src="./Assets/Imgs/Audio.png" alt="Ícono de audio del Narrador con IA" width="45" height="45">
+                <h1 id="title">Narrador con IA</h1>
+            </div>
+            
+            <div class="header__limit">
+                <div class="limit-text">Generaciones restantes: <span id="limit-counter">5</span></div>
+                <div class="limit-bar">
+                    <div class="limit-fill" id="progress-fill"></div>
+                </div>
+            </div>
         </header>
 
         <section class="layout__messages" role="region" aria-label="Área de conversación">

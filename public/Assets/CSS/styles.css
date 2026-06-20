@@ -46,7 +46,46 @@ body {
 .layout__header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
     gap: 1.5rem;
+}
+
+.header__limit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.limit-text {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+}
+
+.limit-text span {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.limit-bar {
+    width: 150px;
+    height: 8px;
+    background-color: var(--bg-container);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(72, 149, 239, 0.3);
+}
+
+.limit-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    width: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 #img {
