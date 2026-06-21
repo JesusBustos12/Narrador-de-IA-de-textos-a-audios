@@ -53,7 +53,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    margin-left: 0.8rem;
+    margin-left: 1rem;
 }
 
 .header__limit {
