@@ -58,50 +58,49 @@ body {
 .header__limit {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    background: rgba(30, 41, 59, 0.6);
-    padding: 1rem 1.5rem;
-    border-radius: 1.2rem;
-    border: 1px solid rgba(72, 149, 239, 0.3);
-    box-shadow: 0 4px 15px rgba(63, 55, 201, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    align-items: flex-end;
+    gap: 0.6rem;
+    background: rgba(15, 23, 42, 0.4);
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .limit-text {
-    font-size: 1.4rem;
-    color: var(--text-main);
+    font-size: 1.1rem;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    text-transform: uppercase;
 }
 
 .limit-text span {
     font-weight: 800;
-    font-size: 1.6rem;
-    color: var(--accent-color);
-    text-shadow: 0 0 8px rgba(72, 149, 239, 0.5);
+    color: var(--text-main);
+    text-shadow: 0 0 10px rgba(72, 149, 239, 0.8);
+    font-size: 1.2rem;
+    margin-left: 0.2rem;
 }
 
 .limit-bar {
-    width: 160px;
-    height: 8px;
-    background-color: #0f172a;
-    border-radius: 10px;
+    width: 130px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
     overflow: hidden;
-    border: 1px solid rgba(72, 149, 239, 0.2);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 
 .limit-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(90deg, #4895EF, #4CC9F0);
     width: 100%;
-    border-radius: 10px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease;
-    box-shadow: 0 0 10px rgba(72, 149, 239, 0.4);
+    border-radius: 2px;
+    box-shadow: 0 0 8px #4CC9F0, 0 0 12px #4895EF;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s ease;
 }
 
 #img {
