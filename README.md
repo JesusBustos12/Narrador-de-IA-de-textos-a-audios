@@ -1,81 +1,66 @@
 # Narrador con OpenAI TTS - Portafolio Full-Stack
 
 ## Descripción
-Aplicación web full-stack que implementa un narrador inteligente de texto a audio utilizando la API de TTS (Text-to-Speech) de OpenAI. El sistema permite a los usuarios ingresar texto, seleccionar una voz y generar narraciones en audio en tiempo real, con una interfaz de chat moderna que muestra mensajes de usuario y reproduce el audio generado. Construido con Node.js, Express, JavaScript vanilla y CSS puro, sin frameworks. 
+Aplicación web full-stack de alto rendimiento que implementa un sistema inteligente de síntesis de voz utilizando la API TTS (Text-to-Speech) de OpenAI. El sistema cuenta con una arquitectura robusta que gestiona la conversión de texto a audio en tiempo real, incluyendo controles de cuotas estrictos basados en direcciones IP conectados a una base de datos en la nube (TiDB) para prevenir vulnerabilidades de elusión (bypass) en el cliente. La interfaz es moderna, responsiva, cuenta con SEO optimizado y decodificación de audio nativa.
 
 ## Objetivo
-Como estudiante universitario autodidacta, desarrollé este proyecto para:
-Mostrar dominio de Node.js + Express en el backend.
-Integrar APIs externas avanzadas (OpenAI TTS con generación de audio en MP3).
-Implementar procesamiento asíncrono de audio con streaming directo al cliente.
-Diseñar una interfaz interactiva y responsiva con animaciones CSS, loader y efectos modernos.
-Aplicar buenas prácticas de seguridad (.env, .gitignore, variables de entorno).
-Construir un portafolio profesional listo para despliegue en producción.
+Desarrollar una solución escalable, segura y optimizada que:
+- Demuestre la integración asíncrona de APIs de inteligencia artificial (OpenAI TTS).
+- Implemente un control antifraude de límite de peticiones (rate limiting) del lado del servidor, validado y persistido en la nube.
+- Maneje procesamiento de buffers y flujos de audio binario (MP3) directamente con Web Audio API.
+- Garantice una experiencia de usuario inmersiva con retroalimentación instantánea, mensajes guiados del sistema, loaders, animaciones fluidas y accesibilidad ARIA.
+- Asegure los endpoints mediante cabeceras de seguridad, sanitización y un manejo seguro de variables de entorno.
 
 ## Características
-Narración en tiempo real: Convierte texto a audio MP3/MPEG usando voces predefinidas de OpenAI (Nova, Shimmer, Echo, etc.).
-Interacción segura y validada: Limits de tasa (Rate Limiting), sanitización de inputs y prevención de desbordamientos.
-Interfaz de chat y Accesibilidad: Atributos ARIA implementados, navegación por teclado y contador de caracteres.
-Loader animado: Indicador visual y desactivación de botones durante la generación del audio.
-Mensajes diferenciados: Usuario (gris oscuro) y bot (azul neón) con formato de burbuja y scroll automático.
-Selección de voz: Dropdown con 8 opciones de voces para personalizar la narración.
-Diseño moderno: Tema oscuro, sombras neón, transiciones suaves, fuente nativa Inter y responsive para móviles/tablets.
-Entrada por teclado: Enviar texto con Enter o botón, soporte de nuevas líneas con Shift+Enter en el nuevo textarea.
-Seguridad y Optimización: Cabeceras de seguridad con Helmet, CORS, caché estático de recursos y compresión (Brotli/Gzip).
+- **Control de Cuotas en la Nube:** Sistema de límites diarios (5 peticiones) validado por IP en TiDB (MySQL), con restablecimiento automático e invisible cada 24 horas. Totalmente inmune a manipulaciones del localStorage o caché del navegador.
+- **Narración en Tiempo Real:** Conversión de texto a audio usando modelos TTS de OpenAI, con 8 voces predefinidas personalizables.
+- **Experiencia de Usuario Integrada:** Mensajes de bienvenida automáticos del bot, loaders de estado y deshabilitación inteligente de controles durante la red de solicitudes.
+- **Seguridad y Rendimiento:** Implementación de Helmet, CORS, Rate Limit, caché estático de recursos y compresión (Brotli/Gzip) en Express.
+- **SEO Técnico Optimizado:** Implementación completa de metadatos Open Graph, Twitter Cards (summary_large_image), Schema.org (JSON-LD WebApplication) y HTML semántico.
+- **Interfaz y Accesibilidad:** Tema oscuro estilo neón responsivo, validación de caracteres dinámicos, soporte de atajos (Shift+Enter) y etiquetas ARIA para lectores de pantalla.
 
 ## Tecnologías utilizadas
-Node.js + Express: Servidor backend, rutas API y manejo de solicitudes.
-OpenAI TTS API: Generación de audio a partir de texto con voces personalizables.
-JavaScript (vanilla): Manipulación del DOM, eventos, fetch asíncrono y creación de blobs de audio con liberación de memoria.
-HTML5 + CSS3: Estructura semántica, Flexbox, animaciones con @keyframes, meta tags SEO y media queries responsivas.
-Seguridad & Performance: dotenv, helmet, cors, express-rate-limit y compression.
-Git & GitHub: Control de versiones y colaboración.
-Nodemon: Para entorno de desarrollo ágil.
+- **Backend:** Node.js, Express.js.
+- **Base de Datos:** TiDB Serverless (MySQL) para la persistencia segura de estados y control de accesos por red.
+- **Inteligencia Artificial:** OpenAI TTS API (Modelo tts-1).
+- **Frontend:** JavaScript Modular (ES6+), HTML5 Semántico, CSS3 puro (variables CSS, Flexbox/Grid, animaciones).
+- **Seguridad & Core:** mysql2, dotenv, helmet, cors, express-rate-limit, compression.
 
 ## Estructura del proyecto
 narrador-openai/
-├── app.js                # Servidor Express, seguridad, rate-limits y lógica OpenAI TTS
-├── package.json          # Dependencias y scripts (start, dev)
-├── package-lock.json     # Bloqueo de versiones de dependencias
-├── vercel.json           # Configuración para despliegue en Vercel
+├── app.js                # Lógica del servidor, middleware, conexión TiDB, OpenAI y seguridad
+├── package.json          # Dependencias y scripts de ejecución
+├── package-lock.json     # Bloqueo estricto de dependencias
+├── vercel.json           # Configuración de despliegue
 ├── public/
-│   ├── index.html        # Estructura semántica, preloads y metadatos SEO
+│   ├── index.html        # Estructura principal, preloads y metadatos SEO avanzados
 │   ├── Assets/
-│   │   ├── CSS/styles.css # Diseño neón, loader, accesibilidad y estados de interacción
-│   │   ├── JS/main.js     # Lógica segura del frontend, gestión de blobs y feedback
-│   │   └── Imgs/Audio.png # Ícono y assets visuales
+│   │   ├── CSS/styles.css # Sistema de diseño (tokens, neón, loader, responsive)
+│   │   ├── JS/            # Lógica cliente, Web Audio API, controladores y UX
+│   │   └── Imgs/Audio.png # Assets visuales
 ├── .env.example          # Plantilla segura de variables
-├── .gitignore            # Protege .env, node_modules
+├── .gitignore            # Exclusión de módulos, secretos y configuraciones locales
 └── README.md             # Esta documentación
-Habilidades demostradas
-Este proyecto refleja competencias clave para un Junior Full-Stack:
 
-Backend: Rutas API, async/await, manejo de buffers de audio, errores y respuestas binarias.
-Frontend: DOM dinámico, eventos, creación de URLs de blobs, UX fluida con audio controls.
-APIs externas: Integración con OpenAI TTS, conversión de respuestas a buffers MP3.
-Arquitectura limpia: Separación de responsabilidades (backend/frontend).
-Seguridad: Variables de entorno, .gitignore, no exposición de secretos.
-Despliegue: Listo para hosting con Node.js (Vercel, Render).
-Autonomía: Construido en horas limitadas sin seguir tutoriales.
+## Habilidades demostradas
+- Arquitectura de software, diseño de APIs RESTful e integración de servicios Cloud (TiDB, OpenAI).
+- Desarrollo de backend seguro, transacciones SQL y protección de endpoints contra vectores de abuso.
+- Procesamiento avanzado en el cliente: Fetch API, manejo de Blobs, Buffers y la API nativa Web Audio.
+- Optimización técnica profunda de SEO y accesibilidad sin depender de frameworks.
+- Implementación de buenas prácticas (CORS, gestión de IPs, variables de entorno, escalabilidad).
 
 ## Demo en vivo
-Prueba el narrador en tiempo real:
+Prueba el narrador funcional en tiempo real:
 https://narrador-de-ia-de-textos-a-audios.vercel.app/
-(Espera 10-20 segundos al primer uso — plan gratuito)
 
 ## Notas para empleadores
-Este es uno de mis proyectos full-stack más recientes.
-Lo construí rápidamente tras aprender los conceptos básicos de TTS, sin seguir guías paso a paso.
-Demuestra que:
-Puedo integrar APIs de multimedia en producción.
-Domino backend y frontend sin frameworks.
-Priorizo seguridad, rendimiento y experiencia de usuario.
-Aprendo rápido y entrego resultados funcionales.
-Estoy listo para contribuir en equipos reales como Junior Full-Stack Developer.
+Este repositorio expone un producto de software robusto, evidenciando la capacidad de:
+- Diseñar, desarrollar y desplegar aplicaciones Full-Stack integrales listas para producción.
+- Identificar y mitigar vulnerabilidades de lógica de negocio (como el bypass de cuotas en cliente) implementando soluciones validadas en el backend con bases de datos.
+- Producir código limpio, modular, asíncrono y de alto rendimiento utilizando tecnologías core de la web.
+- Optimizar la visibilidad del producto en motores de búsqueda y priorizar de forma nativa la experiencia del usuario (UX).
 
 ## Contáctame en:
-GitHub: github.com/JesusBustos12
-LinkedIn: linkedin.com/in/jesus-bustos-arizmendi-325329283
-Correo: jesusbustosarizmendi0@gmail.com
-
-¡Gracias por revisar mi trabajo!
+- GitHub: github.com/JesusBustos12
+- LinkedIn: linkedin.com/in/jesus-bustos-arizmendi-325329283
+- Correo: jesusbustosarizmendi0@gmail.com

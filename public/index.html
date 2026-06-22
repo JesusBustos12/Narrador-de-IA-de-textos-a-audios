@@ -5,34 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Básico -->
-    <meta name="description" content="Narrador inteligente con IA — Convierte texto a audio con voces realistas de OpenAI. Selecciona entre 8 voces y genera narraciones al instante.">
+    <!-- SEO Básico y Metadatos Clave -->
+    <title>Narrador con IA - Convertidor de Texto a Voz (TTS) con OpenAI</title>
+    <meta name="description" content="Herramienta online y gratuita para convertir texto a audio usando las voces ultra realistas de inteligencia artificial de OpenAI. Genera narraciones al instante.">
+    <meta name="keywords" content="texto a voz, text to speech, TTS, voces IA, inteligencia artificial, OpenAI, narrador, generador de voz, locución IA, leer textos">
     <meta name="author" content="Jesus Bustos Arizmendi">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#020617">
+    <link rel="canonical" href="https://narrador-openai.vercel.app/">
 
-    <!-- Open Graph (Redes Sociales) -->
-    <meta property="og:title" content="Narrador con IA — Texto a Audio con OpenAI">
-    <meta property="og:description" content="Convierte cualquier texto en audio narrado con voces realistas de inteligencia artificial.">
+    <!-- Open Graph (Redes Sociales: Facebook, LinkedIn, Discord) -->
+    <meta property="og:title" content="Narrador con IA - Texto a Voz (TTS) con OpenAI">
+    <meta property="og:description" content="Convierte cualquier texto en un audio narrado con voces ultra realistas de inteligencia artificial de OpenAI. Pruébalo ahora.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="./Assets/Imgs/Audio.png">
-    <meta property="og:url" content="https://narrador-openai.vercel.app">
+    <meta property="og:image" content="https://narrador-openai.vercel.app/Assets/Imgs/Audio.png">
+    <meta property="og:url" content="https://narrador-openai.vercel.app/">
+    <meta property="og:site_name" content="Narrador con IA">
     <meta property="og:locale" content="es_MX">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Narrador con IA — Texto a Audio">
-    <meta name="twitter:description" content="Genera narraciones de audio con 8 voces de IA.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Narrador con IA - Texto a Audio">
+    <meta name="twitter:description" content="Genera narraciones de audio de alta calidad con 8 voces diferentes usando tecnología de IA.">
+    <meta name="twitter:image" content="https://narrador-openai.vercel.app/Assets/Imgs/Audio.png">
 
+    <!-- Datos Estructurados (Schema.org) para Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Narrador con IA",
+      "url": "https://narrador-openai.vercel.app/",
+      "description": "Aplicación web que utiliza modelos de inteligencia artificial de OpenAI para convertir texto escrito en archivos de audio con voces realistas.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "Jesus Bustos Arizmendi"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Recursos Críticos -->
     <link rel="icon" type="image/png" href="./Assets/Imgs/Audio.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-    <link rel="preload" href="./Assets/CSS/styles.css?v=6" as="style">
-    <link rel="stylesheet" href="./Assets/CSS/styles.css?v=6"/>
-    <script type="module" src="./Assets/JS/main.js?v=6"></script>
-    <title>Narrador con IA</title>
+    <link rel="preload" href="./Assets/CSS/styles.css?v=7" as="style">
+    <link rel="stylesheet" href="./Assets/CSS/styles.css?v=7"/>
+    <script type="module" src="./Assets/JS/main.js?v=7"></script>
 </head>
 
 <body>
@@ -56,7 +83,11 @@
         <section class="layout__messages" role="region" aria-label="Área de conversación">
 
             <div class="messages__content" role="log" aria-live="polite" aria-label="Historial de mensajes">
-
+                <div class="messages__content--bot">
+                    ¡Hola! Soy el Narrador con IA. 👋<br><br>
+                    Escribe el texto que desees, selecciona una voz y presiona "Narrar" para escucharlo.<br>
+                    ¿Qué te gustaría narrar hoy?
+                </div>
             </div>
 
             <section class="messages__inputs" role="form" aria-label="Formulario de narración">
